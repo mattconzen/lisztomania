@@ -50,3 +50,23 @@ erl_crash.dump
 /rel
 
 # End of https://www.gitignore.io/api/phoenix
+config/secret.exs
+config/spotify.exs
+
+# Created by https://www.gitignore.io/api/vim
+
+### Vim ###
+# swap
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-v][a-z]
+[._]sw[a-p]
+# session
+Session.vim
+# temporary
+.netrwhist
+*~
+# auto-generated tag files
+tags
+
+# End of https://www.gitignore.io/api/vim

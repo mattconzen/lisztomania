@@ -11,7 +11,13 @@ defmodule Lisztomania.PlaylistController do
   end
 
   def show(conn, %{"id" => user}) do
-    render(conn, "show.json", playlists: Spotify.Playlist.get_users_playlists(conn, "mconz"))
+    case Spotify.Playlist.get_users_playlists(conn, "mconz") do 
+      { :ok, playlists } -> 
+        render(conn, "show.json", playlists: playlists 
+        )
+      { :error, reason } -> 
+        { conn, "/error"} 
+    end
   end
 
   def update(conn, %{"id" => id, "playlist" => playlist_params}) do

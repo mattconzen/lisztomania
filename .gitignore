@@ -54,8 +54,6 @@ erl_crash.dump
 /rel
 
 # End of https://www.gitignore.io/api/phoenix
-config/secret.exs
-config/spotify.exs
 
 # Created by https://www.gitignore.io/api/vim
 

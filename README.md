@@ -1,6 +1,4 @@
-[![CircleCI](https://circleci.com/gh/mattconzen/lisztomania.svg?style=svg)](https://circleci.com/gh/mattconzen/lisztomania)
-
-# Lisztomania
+# Lisztomania [![CircleCI](https://circleci.com/gh/mattconzen/lisztomania.svg?style=svg)](https://circleci.com/gh/mattconzen/lisztomania)
 
 To start your Phoenix app:
 

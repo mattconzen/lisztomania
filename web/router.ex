@@ -27,6 +27,6 @@ defmodule Lisztomania.Router do
     pipe_through :api
 
     resources "/albums", AlbumController, except: [:new, :edit]
-    resources "/playlists", PlaylistController, except: [:new, :edit]
+    resources "/playlists", PlaylistController
   end
 end

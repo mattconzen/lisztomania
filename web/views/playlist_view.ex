@@ -13,7 +13,8 @@ defmodule Lisztomania.PlaylistView do
 
   def playlist_json(playlist) do
     %{
-      name: playlist.name
+      name: playlist.name,
+      id: playlist.id
     }
   end
 

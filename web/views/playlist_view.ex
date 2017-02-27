@@ -5,6 +5,10 @@ defmodule Lisztomania.PlaylistView do
     message
   end
 
+  def render("show.json", %{playlist: playlist}) do
+    playlist_json(playlist)
+  end
+
   def render("show.json", %{playlists: playlists}) do
     %{  
       playlists: Enum.map(playlists, &playlist_json/1)

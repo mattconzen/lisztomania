@@ -23,5 +23,3 @@ database:
 test:
   override:
     - mix test
-    - mix credo --strict
-    - mv ./_build/test/lib/PROJECT_DIR_NAME/test-junit-report.xml $CIRCLE_TEST_REPORTS/junit.xml

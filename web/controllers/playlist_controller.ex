@@ -1,55 +1,30 @@
+require IEx 
 defmodule Lisztomania.PlaylistController do
   use Lisztomania.Web, :controller
-
-  alias Lisztomania.Playlist
+  plug Lisztomania.Plugs.Auth
 
   def index(conn, _params) do
-    playlists = Repo.all(Playlist)
-    render(conn, "index.json", playlists: playlists)
+    render conn, "errors.json", message: "oops"
   end
 
   def create(conn, %{"playlist" => playlist_params}) do
-    changeset = Playlist.changeset(%Playlist{}, playlist_params)
-
-    case Repo.insert(changeset) do
-      {:ok, playlist} ->
-        conn
-        |> put_status(:created)
-        |> put_resp_header("location", playlist_path(conn, :show, playlist))
-        |> render("show.json", playlist: playlist)
-      {:error, changeset} ->
-        conn
-        |> put_status(:unprocessable_entity)
-        |> render(Lisztomania.ChangesetView, "error.json", changeset: changeset)
-    end
+    render conn, "errors.json", message: "oops"
   end
 
-  def show(conn, %{"id" => id}) do
-    playlist = Repo.get!(Playlist, id)
-    render(conn, "show.json", playlist: playlist)
+  def show(conn, %{"id" => user}) do
+    case Spotify.Playlist.get_users_playlists(conn, "mconz") do 
+      { :ok, response } -> 
+        render(conn, "show.json", playlists: response.items)
+      { :error, message } ->
+        render(conn, "errors.json", message: message)
+    end
   end
 
   def update(conn, %{"id" => id, "playlist" => playlist_params}) do
-    playlist = Repo.get!(Playlist, id)
-    changeset = Playlist.changeset(playlist, playlist_params)
-
-    case Repo.update(changeset) do
-      {:ok, playlist} ->
-        render(conn, "show.json", playlist: playlist)
-      {:error, changeset} ->
-        conn
-        |> put_status(:unprocessable_entity)
-        |> render(Lisztomania.ChangesetView, "error.json", changeset: changeset)
-    end
+    render conn, "errors.json", message: "oops"
   end
 
   def delete(conn, %{"id" => id}) do
-    playlist = Repo.get!(Playlist, id)
-
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
-    Repo.delete!(playlist)
-
-    send_resp(conn, :no_content, "")
+    render conn, "errors.json", message: "oops"
   end
 end

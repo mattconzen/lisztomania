@@ -18,6 +18,8 @@ defmodule Lisztomania.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/authorize", AuthorizationController, :authorize
+    get "/authenticate", AuthenticationController, :authenticate
   end
 
   # API routes 

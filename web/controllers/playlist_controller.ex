@@ -1,3 +1,4 @@
+require IEx 
 defmodule Lisztomania.PlaylistController do
   use Lisztomania.Web, :controller
   plug Lisztomania.Plugs.Auth
@@ -11,8 +12,12 @@ defmodule Lisztomania.PlaylistController do
   end
 
   def show(conn, %{"id" => user}) do
-    playlists = elem(Spotify.Playlist.get_users_playlists(conn, "mconz"), 1).items
-    render conn, "show.json", playlists: playlists
+    case Spotify.Playlist.get_users_playlists(conn, "mconz") do 
+      { :ok, response } -> 
+        render(conn, "show.json", playlists: response.items)
+      { :error, message } ->
+        render(conn, "errors.json", message: message)
+    end
   end
 
   def update(conn, %{"id" => id, "playlist" => playlist_params}) do

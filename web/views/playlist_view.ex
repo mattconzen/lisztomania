@@ -5,6 +5,10 @@ defmodule Lisztomania.PlaylistView do
     message
   end
 
+  def render("show.json", %{playlist_id: playlist_id}) do
+    %{ id: playlist_id }
+  end
+
   def render("show.json", %{playlist: playlist}) do
     playlist_json(playlist)
   end

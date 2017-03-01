@@ -3,8 +3,8 @@ defmodule Lisztomania.PlaylistController do
   plug Lisztomania.Plugs.Auth
 
   def index(conn, %{"user_id" => user_id}) do
-    case Spotify.Playlist.get_users_playlists(conn, user_id) do 
-      {:ok, response} -> 
+    case Spotify.Playlist.get_users_playlists(conn, user_id) do
+      {:ok, response} ->
         render(conn, "show.json", playlists: response.items)
       {:error, message} ->
         render(conn, "errors.json", message: message)
@@ -21,11 +21,11 @@ defmodule Lisztomania.PlaylistController do
   end
 
   def show(conn, _params) do
-    render conn, "errors.json", message: "oops"    
+    render conn, "errors.json", message: "oops"
   end
 
   def update(conn, %{"user_id" => user_id, "id" => playlist_id, "album_id" => album_id}) do
-    body = Poison.encode!(%{ uris: get_track_ids_for_album(conn, album_id)})
+    body = Poison.encode!(%{uris: get_track_ids_for_album(conn, album_id)})
     case Spotify.Playlist.add_tracks(conn, user_id, playlist_id, body, []) do
       {:ok, response} ->
         render(conn, "show.json", playlist_id: playlist_id)
@@ -43,7 +43,7 @@ defmodule Lisztomania.PlaylistController do
       {:error, message} ->
         render(conn, "errors.json", message: message)
     end
-  end 
+  end
 
   def delete(conn, _params) do
     render conn, "errors.json", message: "oops"

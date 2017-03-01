@@ -1,23 +1,21 @@
-require IEx 
 defmodule Lisztomania.PlaylistController do
   use Lisztomania.Web, :controller
   plug Lisztomania.Plugs.Auth
 
   def index(conn, %{"user_id" => user_id}) do
     case Spotify.Playlist.get_users_playlists(conn, user_id) do 
-      { :ok, response } -> 
+      {:ok, response} -> 
         render(conn, "show.json", playlists: response.items)
-      { :error, message } ->
+      {:error, message} ->
         render(conn, "errors.json", message: message)
     end
   end
 
   def create(conn, %{"user_id" => user_id, "name" => name}) do
-    IEx.pry
     case Spotify.Playlist.create_playlist(conn, user_id, Poison.encode!(%{name: name})) do
-      { :ok, new_playlist } ->
+      {:ok, new_playlist} ->
         render(conn, "show.json", playlist: new_playlist)
-      { :error, message } ->
+      {:error, message} ->
         render(conn, "errors.json", message: "oops")
     end
   end

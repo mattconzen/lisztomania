@@ -6,7 +6,7 @@ defmodule Lisztomania.Plugs.Auth do
   def call(conn, _default) do
     conn = Plug.Conn.fetch_session(conn)
     unless Plug.Conn.get_session(conn, :access_token) do
-      Phoenix.redirect conn, external: SpotifyStrategy.authorize_url!
+      Phoenix.Controller.redirect conn, external: SpotifyStrategy.authorize_url!
     else
       IEx.pry
       Map.put(

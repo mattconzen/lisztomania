@@ -41,7 +41,8 @@ defmodule Lisztomania.Mixfile do
      {:cowboy, "~> 1.0"},
      {:poison, ">= 1.5.0"},
      {:spotify_ex, path: "/Users/admin/code/spotify_ex"},
-     {:credo, "~> 0.5", only: [:dev, :test]}
+     {:credo, "~> 0.5", only: [:dev, :test]},
+     {:oauth2, "~> 0.9.1"},
    ]
   end
 

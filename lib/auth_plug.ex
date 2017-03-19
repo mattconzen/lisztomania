@@ -1,3 +1,4 @@
+require IEx
 defmodule Lisztomania.Plugs.Auth do
   alias SpotifyStrategy
   alias Plug.Conn

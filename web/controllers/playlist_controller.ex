@@ -1,4 +1,3 @@
-require IEx
 defmodule Lisztomania.PlaylistController do
   use Lisztomania.Web, :controller
   plug Lisztomania.Plugs.Auth
@@ -7,7 +6,6 @@ defmodule Lisztomania.PlaylistController do
 
   def index(conn, %{"user_id" => user_id}) do
     auth = get_credentials(conn)
-    IEx.pry
     case Playlist.get_users_playlists(auth, user_id) do
       {:ok, response} ->
         render(conn, "show.json", playlists: response.items)

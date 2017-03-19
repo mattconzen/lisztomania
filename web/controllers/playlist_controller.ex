@@ -1,9 +1,12 @@
+require IEx
 defmodule Lisztomania.PlaylistController do
   use Lisztomania.Web, :controller
   plug Lisztomania.Plugs.Auth
 
   def index(conn, %{"user_id" => user_id}) do
-    case Spotify.Playlist.get_users_playlists(conn, user_id) do
+    auth = get_credentials(conn)
+    IEx.pry
+    case Spotify.Playlist.get_users_playlists(auth, user_id) do
       {:ok, response} ->
         render(conn, "show.json", playlists: response.items)
       {:error, message} ->
@@ -16,7 +19,7 @@ defmodule Lisztomania.PlaylistController do
       {:ok, new_playlist} ->
         render(conn, "show.json", playlist: new_playlist)
       {:error, message} ->
-        render(conn, "errors.json", message: "oops")
+        render(conn, "errors.json", message: message)
     end
   end
 
@@ -27,7 +30,7 @@ defmodule Lisztomania.PlaylistController do
   def update(conn, %{"user_id" => user_id, "id" => playlist_id, "album_id" => album_id}) do
     body = Poison.encode!(%{uris: get_track_ids_for_album(conn, album_id)})
     case Spotify.Playlist.add_tracks(conn, user_id, playlist_id, body, []) do
-      {:ok, response} ->
+      {:ok, _response} ->
         render(conn, "show.json", playlist_id: playlist_id)
       {:error, message} ->
         render(conn, "errors.json", message: message)
@@ -47,5 +50,13 @@ defmodule Lisztomania.PlaylistController do
 
   def delete(conn, _params) do
     render conn, "errors.json", message: "oops"
+  end
+
+  def get_credentials(conn) do
+    fetch_session(conn)
+    %Spotify.Credentials{
+      access_token: Plug.Conn.get_session(conn, :access_token),
+      refresh_token: Plug.Conn.get_session(conn, :refresh_token)
+    }
   end
 end

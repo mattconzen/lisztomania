@@ -1,8 +1,15 @@
 defmodule SpotifyStrategy do
-    use OAuth2.Strategy
+    alias OAuth2.Strategy.AuthCode
+    alias OAuth2.Client
+    @moduledoc """
+    Provides an OAuth2 strategy for spotify, implementing the
+    pattern suggested by the OAuth2 lib
+
+    for details: https://github.com/scrogson/oauth2
+    """
 
     def client do
-        OAuth2.Client.new([
+        Client.new([
             strategy: __MODULE__,
             client_id: System.get_env("SPOTIFY_CLIENT_ID"),
             client_secret: System.get_env("SPOTIFY_SECRET_KEY"),
@@ -14,24 +21,24 @@ defmodule SpotifyStrategy do
     end
 
     def authorize_url! do
-        OAuth2.Client.authorize_url!(
+        Client.authorize_url!(
             client(),
             scope: "playlist-read-private playlist-modify-public playlist-modify-private"
         )
     end
 
     def get_token!(params \\ [], headers \\ [], opts \\ []) do
-        OAuth2.Client.get_token!(client(), params, headers, opts)
+        Client.get_token!(client(), params, headers, opts)
     end
 
     def authorize_url(client, params) do
-        OAuth2.Strategy.AuthCode.authorize_url(client, params)
+        AuthCode.authorize_url(client, params)
     end
 
     def get_token(client, params, headers) do
         client
-        |> put_param(:client_secret, client.client_secret)
-        |> put_header("accept", "application/json")
-        |> OAuth2.Strategy.AuthCode.get_token(params, headers)
+        |> Client.put_param(:client_secret, client.client_secret)
+        |> Client.put_header("accept", "application/json")
+        |> AuthCode.get_token(params, headers)
     end
 end

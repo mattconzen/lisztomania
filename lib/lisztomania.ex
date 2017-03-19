@@ -1,5 +1,10 @@
 defmodule Lisztomania do
   use Application
+  alias Lisztomania.Endpoint
+  alias Lisztomania.Repo
+  @moduledoc """
+    Main module for the Liszt spotify app
+  """
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
   # for more information on OTP Applications
@@ -9,10 +14,11 @@ defmodule Lisztomania do
     # Define workers and child supervisors to be supervised
     children = [
       # Start the Ecto repository
-      supervisor(Lisztomania.Repo, []),
+      supervisor(Repo, []),
       # Start the endpoint when the application starts
-      supervisor(Lisztomania.Endpoint, []),
-      # Start your own worker by calling: Lisztomania.Worker.start_link(arg1, arg2, arg3)
+      supervisor(Endpoint, []),
+      # Start your own worker by calling:
+      #  Lisztomania.Worker.start_link(arg1, arg2, arg3)
       # worker(Lisztomania.Worker, [arg1, arg2, arg3]),
     ]
 
@@ -25,7 +31,7 @@ defmodule Lisztomania do
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
   def config_change(changed, _new, removed) do
-    Lisztomania.Endpoint.config_change(changed, removed)
+    Endpoint.config_change(changed, removed)
     :ok
   end
 end

@@ -22,11 +22,11 @@ defmodule Lisztomania.Router do
     get "/authenticate", AuthenticationController, :authenticate
   end
 
-  # API routes 
+  # API routes
   scope "/api", Lisztomania do
     pipe_through :api
 
-    resources "/users", UserController do 
+    resources "/users", UserController do
       resources "/playlists", PlaylistController
     end
   end

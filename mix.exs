@@ -43,6 +43,7 @@ defmodule Lisztomania.Mixfile do
      {:spotify_ex, path: "/Users/admin/code/spotify_ex"},
      {:credo, "~> 0.5", only: [:dev, :test]},
      {:oauth2, "~> 0.9.1"},
+     {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
    ]
   end
 

@@ -46,19 +46,17 @@ defmodule Lisztomania.PlaylistController do
 
 # body = Poison.encode!(%{ uris: [ "spotify:track:755MBpLqJqCO87PkoyBBQC", "spotify:track:1hsWu8gT2We6OzjhYGAged" ]})
 
-  def get_track_ids_for_album(conn, album_id) do
-    auth = get_credentials(conn)
+  def get_track_ids_for_album(auth, album_id) do
     case Album.get_album_tracks(auth, album_id) do
       {:ok, response} ->
         Enum.into(response.items, [], fn t -> t.uri end)
       {:error, message} ->
-        render(conn, "errors.json", message: message)
+        {:error, message}
     end
   end
 
   def delete(conn, _params) do
     render conn, "errors.json", message: "oops"
   end
-
 
 end

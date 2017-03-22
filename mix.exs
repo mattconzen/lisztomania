@@ -40,7 +40,7 @@ defmodule Lisztomania.Mixfile do
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
      {:poison, ">= 1.5.0"},
-     {:spotify_ex, "~> 2.0.4"},
+     {:spotify_ex, git: "https://github.com/mattconzen/spotify_ex"},
      {:credo, "~> 0.5", only: [:dev, :test]},
      {:oauth2, "~> 0.9.1"},
      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},

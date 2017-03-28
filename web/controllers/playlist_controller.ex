@@ -29,8 +29,14 @@ defmodule Lisztomania.PlaylistController do
     end
   end
 
-  def show(conn, _params) do
-    render conn, "errors.json", message: "oops"
+  def show(conn, %{"user_id" => user_id, "id" => playlist_id}) do
+    auth = get_credentials(conn)
+    case Playlist.get_playlist_tracks(auth, user_id, playlist_id) do
+      {:ok, response} ->
+        render(conn, "show.json", tracks: response.items)
+      {:error, message} ->
+        render(conn, "errors.json", message: message)
+    end
   end
 
   def update(conn, %{"user_id" => user_id, "id" => playlist_id, "album_id" => album_id}) do
@@ -44,7 +50,18 @@ defmodule Lisztomania.PlaylistController do
     end
   end
 
-# body = Poison.encode!(%{ uris: [ "spotify:track:755MBpLqJqCO87PkoyBBQC", "spotify:track:1hsWu8gT2We6OzjhYGAged" ]})
+  def delete(conn, _params) do
+    render conn, "errors.json", message: "oops"
+  end
+
+  # def get_albums_from_playlist(auth, playlist_id) do
+  #   case Playlist.get_playlist_tracks(auth, playlist_id) do
+  #       {:ok, response} ->
+  #         Enum.into(response.items, [], fn t-> t.album end)
+  #       {:error, message} ->
+  #           {:error, message}
+  #   end
+  # end
 
   def get_track_ids_for_album(auth, album_id) do
     case Album.get_album_tracks(auth, album_id) do
@@ -54,9 +71,4 @@ defmodule Lisztomania.PlaylistController do
         {:error, message}
     end
   end
-
-  def delete(conn, _params) do
-    render conn, "errors.json", message: "oops"
-  end
-
 end

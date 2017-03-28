@@ -50,8 +50,8 @@ defmodule Lisztomania.PlaylistController do
     end
   end
 
-  def delete(conn, _params) do
-    render conn, "errors.json", message: "oops"
+  def delete(conn, {%"user_id" => user_id, "id" => playlist_id, "album_id" => album_id}) do
+    render(conn, "errors.json", message: "Delete is not supported because `spotify_ex` doesn't implement it yet")
   end
 
   # def get_albums_from_playlist(auth, playlist_id) do
